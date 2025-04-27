@@ -229,17 +229,40 @@ const HomeCalendario = () => {
     <div style={{ padding: '2rem' }}>
       {/* 🔵 Mostrar usuario */}
       {usuario && (
-        <div style={{
-          marginBottom: '1.5rem',
-          padding: '1rem',
-          backgroundColor: '#f0f0f0',
-          borderRadius: '10px',
-          fontFamily: 'Poppins, sans-serif',
-          fontWeight: 'bold'
-        }}>
-          Bienvenido {usuario.nombre} {usuario.apellido} 👋🏻
-        </div>
-      )}
+  <div style={{
+    marginBottom: '1.5rem',
+    padding: '1rem',
+    backgroundColor: '#f0f0f0',
+    borderRadius: '10px',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }}>
+    <span>
+      Bienvenido {usuario.nombre} {usuario.apellido} 👋🏻
+    </span>
+    <button
+      onClick={() => {
+        localStorage.removeItem('userCalendario');
+        window.location.href = '/logincalendario'; // 👈 Volver al login
+      }}
+      style={{
+        padding: '0.5rem 1rem',
+        backgroundColor: '#dc3545',
+        color: 'white',
+        border: 'none',
+        borderRadius: '6px',
+        fontWeight: 'bold',
+        cursor: 'pointer'
+      }}
+    >
+      🔒 Cerrar sesión
+    </button>
+  </div>
+)}
+
 
       <h2>📅 Calendario de Eventos</h2>
 
