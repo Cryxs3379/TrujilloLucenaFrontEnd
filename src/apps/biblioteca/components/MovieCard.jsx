@@ -51,7 +51,10 @@ const MovieCard = ({ pelicula }) => {
   }} />
   <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{pelicula.nombre}</h3>
   <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}><em>Haz clic para ver más</em></p>
-  <button onClick={handleLikeToggle} style={{
+  <button
+  type="button"      
+  onClick={handleLikeToggle}
+  style={{
     padding: '0.5rem 1rem',
     background: yaLeGusta ? '#dc3545' : '#28a745',
     color: 'white',
@@ -59,9 +62,11 @@ const MovieCard = ({ pelicula }) => {
     borderRadius: '6px',
     fontSize: '0.9rem',
     cursor: 'pointer'
-  }}>
-    {yaLeGusta ? '💔 Quitar de Me gusta' : '❤️ Me gusta'}
-  </button>
+  }}
+>
+  {yaLeGusta ? '💔 Quitar de Me gusta' : '❤️ Me gusta'}
+</button>
+
 </div>
 
   );
