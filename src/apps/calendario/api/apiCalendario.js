@@ -2,9 +2,12 @@
 import axios from 'axios';
 
 // URLS Base
-const API_LOGIN = 'http://localhost:10000/api/logincalendario';
-const API_EVENTOS = 'http://localhost:10000/api/calendario'; // 👈 NUEVA para eventos
-const API_HISTORIAL = 'http://localhost:10000/api/historial'; // ✅ AÑADIR ESTA LÍNEA
+// const API_LOGIN = 'http://localhost:10000/api/logincalendario';
+// const API_EVENTOS = 'http://localhost:10000/api/calendario'; // 👈 NUEVA para eventos
+// const API_HISTORIAL = 'http://localhost:10000/api/historial'; // ✅ AÑADIR ESTA LÍNEA
+const API_LOGIN = 'https://trujillolucenabackend.onrender.com/api/logincalendario';
+const API_EVENTOS = 'https://trujillolucenabackend.onrender.com/api/calendario';
+const API_HISTORIAL = 'https://trujillolucenabackend.onrender.com/api/historial';
 
 // 🔐 Login para Calendario
 export const loginCalendario = async (email, password) => {
