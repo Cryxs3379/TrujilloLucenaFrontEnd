@@ -33,7 +33,7 @@ const NavbarGlobal = () => {
       </div>
 
       {/* Botón de Logout a la derecha */}
-      {usuario && (
+      {/* {usuario && (
         <button onClick={handleLogout} style={{
           position: 'absolute',
           right: '2rem',
@@ -51,7 +51,7 @@ const NavbarGlobal = () => {
         >
           🚪 Cerrar sesión
         </button>
-      )}
+      )} */}
     </nav>
   );
 };
