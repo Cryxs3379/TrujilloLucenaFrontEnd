@@ -8,8 +8,8 @@ const NavbarGlobal = () => {
   const rutaBiblioteca = usuario ? "/biblioteca" : "/login";
 
   const handleLogout = () => {
-    logout(); // 👈 Llama a tu context para limpiar la sesión
-    navigate('/'); // 👈 Después te lleva al home
+    logout();
+    navigate('/');
   };
 
   return (
@@ -18,40 +18,27 @@ const NavbarGlobal = () => {
       justifyContent: 'center',
       alignItems: 'center',
       flexWrap: 'wrap',
-      gap: '1.5rem',
-      padding: '1.5rem 2rem',
+      gap: '0.75rem',
+      padding: '1rem',
       backgroundColor: '#111111',
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '1.2rem',
+      fontSize: '1.1rem',
       borderBottom: '3px solid #000000',
-      position: 'relative'
     }}>
-      <div style={{ display: 'flex', gap: '1.5rem' }}>
-        <NavItem to="/">🏠 Home</NavItem>
-        <NavItem to={rutaBiblioteca}>🎬 Biblioteca</NavItem>
-        <NavItem to="/logincalendario">📅 Calendario</NavItem>
-      </div>
+      <NavItem to="/">🏠 Home</NavItem>
+      <NavItem to={rutaBiblioteca}>🎬 Biblioteca</NavItem>
+      <NavItem to="/logincalendario">📅 Calendario</NavItem>
+      <NavItem to="/rentacar">🚗 Rentacar</NavItem>
+      <NavItem to="/tetris">🧩 Tetris</NavItem>
 
-      {/* Botón de Logout a la derecha */}
-      {/* {usuario && (
-        <button onClick={handleLogout} style={{
-          position: 'absolute',
-          right: '2rem',
-          backgroundColor: '#dc3545',
-          color: '#ffffff',
-          border: 'none',
-          padding: '0.6rem 1.2rem',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          fontWeight: 'bold',
-          transition: 'all 0.3s ease'
-        }}
-        onMouseEnter={(e) => e.target.style.backgroundColor = '#b02a37'}
-        onMouseLeave={(e) => e.target.style.backgroundColor = '#dc3545'}
-        >
-          🚪 Cerrar sesión
-        </button>
-      )} */}
+      <style>{`
+        @media (max-width: 768px) {
+          nav {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+          }
+        }
+      `}</style>
     </nav>
   );
 };
@@ -63,12 +50,16 @@ const NavItem = ({ to, children }) => {
       style={{
         textDecoration: 'none',
         color: '#000000',
-        padding: '0.8rem 1.2rem',
+        padding: '0.6rem 1rem',
         border: '2px solid #000000',
-        borderRadius: '10px',
+        borderRadius: '8px',
         transition: 'all 0.3s ease',
         backgroundColor: '#ffffff',
-        boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        flex: '1 1 120px', // <-- permite redimensionar en responsive
+        textAlign: 'center',
+        minWidth: '100px',
+        maxWidth: '180px',
       }}
       onMouseEnter={(e) => {
         e.target.style.backgroundColor = '#000000';

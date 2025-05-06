@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './home/Home';                         // NUEVO
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './home/Home';
 import Biblioteca from './apps/biblioteca/pages/Biblioteca';
 import MeGustan from './apps/biblioteca/pages/MeGustan';
 import Login from './apps/biblioteca/pages/Login';
 import PeliculaDetalle from './apps/biblioteca/pages/PeliculaDetalle';
-import NavbarGlobal from './layout/NavbarGlobal';       // Nuevo navbar siempre visible
+import NavbarGlobal from './layout/NavbarGlobal';
 import RutaPrivada from './apps/biblioteca/components/RutaPrivada';
-import { Navigate } from 'react-router-dom';
 import LoginCalendario from './apps/calendario/pages/LoginCalendario';
 import HomeCalendario from './apps/calendario/pages/HomeCalendario';
-import './App.css'; // 🎯 Importar CSS global
+import './App.css';
+import Tetris from './apps/tetris/Tetris';
 
-<Routes>
-  ...
-  <Route path="/logincalendario" element={<LoginCalendario />} />
-  <Route path="/homecalendario" element={<HomeCalendario />} />
-</Routes>
-
+// 🚗 Rentacar Imports
+import Oficina from './apps/rentacar/pages/Oficina';
+import Reservas from './apps/rentacar/pages/Reservas';
+import Garaje from './apps/rentacar/pages/Garaje';
+import NavbarRentacar from './apps/rentacar/components/NavbarRentacar';
 
 function AppWrapper() {
   const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('usuario')));
@@ -41,7 +40,7 @@ function AppWrapper() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/logincalendario" element={<LoginCalendario />} />
-        <Route path="/Homecalendario" element={<HomeCalendario />} />
+        <Route path="/homecalendario" element={<HomeCalendario />} />
         <Route path="/login" element={<Login onLogin={setUsuario} />} />
         <Route path="/biblioteca" element={
           <RutaPrivada usuario={usuario}>
@@ -58,6 +57,15 @@ function AppWrapper() {
             <PeliculaDetalle />
           </RutaPrivada>
         } />
+
+        {/* 🚗 Rentacar Layout con subrutas */}
+        <Route path="/rentacar" element={<NavbarRentacar />}>
+          <Route index element={<Navigate to="oficina" replace />} />
+          <Route path="oficina" element={<Oficina />} />
+          <Route path="reservas" element={<Reservas />} />
+          <Route path="garaje" element={<Garaje />} />
+        </Route>
+        <Route path="/tetris" element={<Tetris />} />
       </Routes>
     </BrowserRouter>
   );
