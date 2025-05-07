@@ -29,27 +29,32 @@ const Wrapper = styled.div`
   @media (max-width: 768px) { padding: 1rem; }
 `;
 
-/* fila para tablero + panel; wrap para que el teclado baje de línea */
+// Contenedor principal
 const GameArea = styled.div`
   display: flex;
-  flex-wrap: wrap;              /* permite que los controles salten abajo */
+  flex-wrap: wrap;            /* deja que el teclado táctil baje de línea */
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
   color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 100vw;
+  overflow-x: auto;           /* 🛡️ evita overflow horizontal */
 
-  @media (max-width: 768px) {
-    flex-direction: row;    
-    align-items: flex-start;
-    gap: 10px;             
+  & > * {
+    min-width: 0;
+    flex-shrink: 1;
   }
-     /* Deja que tablero y panel puedan encoger si el viewport es justo */
- & > * {
-   min-width: 0;
-   flex-shrink: 1;
- }
-`; 
+`;
+
+// NUEVO: agrupa tablero + panel en la misma fila y evita que hagan wrap entre sí
+const GameRow = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: nowrap;          /* lo importante: no se separan */
+`;
+
 
 /* ----------------------------- */
 const Tetris = () => {
@@ -183,24 +188,39 @@ const Tetris = () => {
   return (
     <Wrapper>
       <GameArea>
-        {/* 1. Tablero de juego */}
-        {gameStarted && (
-          <GameBoard
-            player={player}
-            level={level}
-            setGameOver={setGameOver}
-            updatePlayerPos={updatePlayerPos}
-            stage={stage}
-            dropTime={dropTime}
+        <GameRow>
+          {/* 1. Tablero de juego */}
+          {gameStarted && (
+            <GameBoard
+              player={player}
+              level={level}
+              setGameOver={setGameOver}
+              updatePlayerPos={updatePlayerPos}
+              stage={stage}
+              dropTime={dropTime}
+              gameStarted={gameStarted}
+              paused={paused}
+              setDropTime={setDropTime}
+              playerRef={playerRef}
+              lockStartRef={lockStartRef}
+            />
+          )}
+  
+          {/* 2. Panel de puntuación / pieza siguiente */}
+          <ScorePanel
             gameStarted={gameStarted}
+            gameOver={gameOver}
             paused={paused}
-            setDropTime={setDropTime}
-            playerRef={playerRef}
-            lockStartRef={lockStartRef}
+            score={score}
+            lines={lines}
+            level={level}
+            nextTetromino={nextTetromino}
+            handleStart={handleStart}
+            setPaused={setPaused}
           />
-        )}
-
-        {/* 2. Teclado táctil (dentro de GameArea) */}
+        </GameRow>
+  
+        {/* 3. Teclado táctil (se coloca debajo al hacer wrap) */}
         {gameStarted && (
           <TouchControls
             movePlayer={movePlayer}
@@ -209,23 +229,10 @@ const Tetris = () => {
             stage={stage}
           />
         )}
-
-        {/* 3. Panel de puntuación / pieza siguiente */}
-        <ScorePanel
-          gameStarted={gameStarted}
-          gameOver={gameOver}
-          paused={paused}
-          score={score}
-          lines={lines}
-          level={level}
-          nextTetromino={nextTetromino}
-          handleStart={handleStart}
-          setPaused={setPaused}
-        />
       </GameArea>
-
+  
       {!gameStarted && <Leaderboard />}
-
+  
       {showModal && (
         <ScoreModal
           score={score}
@@ -234,6 +241,7 @@ const Tetris = () => {
       )}
     </Wrapper>
   );
+  
 };
 
 export default Tetris;

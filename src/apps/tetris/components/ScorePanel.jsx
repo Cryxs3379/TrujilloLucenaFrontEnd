@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import NextPiece from './NextPiece';
+import { MIN_PANEL } from '../utils/constants';
 
 const PanelWrapper = styled.div`
-  width: clamp(140px, 32vw, 220px);
+  /* Se encoge de MIN_PANEL px hasta 200 px, nunca crece más de 200 */
+  width: clamp(${MIN_PANEL}px, 24vw, 200px);
   padding: 1.25rem;
   background: linear-gradient(145deg,#1f1f1f,#2d2d2d);
   border-radius: 10px;
@@ -12,12 +14,13 @@ const PanelWrapper = styled.div`
   flex-direction: column;
   gap: 0.8rem;
   order: 1;
-  flex: 0 1 140px;   /* puede encoger pero no crecer */
-  min-width: 0;      /* necesario para que flex calcule bien */
+  /* puede encoger (1) pero no crecer (0). El valor de base coincide con width */
+  flex: 0 1 clamp(${MIN_PANEL}px, 24vw, 200px);
+  min-width: 0;  /* necesario para evitar overflow en flex */
 
   @media (max-width: 768px) {
-    width: 100px;        /* coincide con la fórmula (100px + gap + bordes) */
-    flex: 0 1 100px;
+    width: ${MIN_PANEL}px;
+    flex: 0 1 ${MIN_PANEL}px;
     padding: 0.8rem;
     gap: 0.5rem;
     font-size: 0.75rem;

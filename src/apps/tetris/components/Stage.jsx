@@ -10,8 +10,10 @@ const StyledStage = styled.div`
   grid-template-columns: ${({ cols }) => `repeat(${cols}, ${CELL_SIZE})`};
   background: #111;
   border: 2px solid #333;
-  flex: 0 1 auto;        /* permite encoger dentro del flex‑row */
-  min-width: 0;          /* evita overflow del flex item        */
+  min-width: calc(${CELL_SIZE} * 12);  // 🧱 asegura espacio mínimo horizontal
+  overflow-x: auto;                    // 🔄 scroll si no cabe
+  flex: 0 1 auto;
+  flex-shrink: 0;
 `;
 
 const Stage = ({ stage }) => (
