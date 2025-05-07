@@ -40,9 +40,9 @@ const GameArea = styled.div`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   @media (max-width: 768px) {
-    flex-direction: row;        /* 🟢 sigue en fila en móvil  */
+    flex-direction: row;    
     align-items: flex-start;
-    gap: 1rem;
+    gap: 0.6rem;             
   }
 `;
 /* ----------------------------- */
