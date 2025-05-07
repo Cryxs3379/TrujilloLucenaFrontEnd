@@ -3,34 +3,36 @@ import styled from 'styled-components';
 import NextPiece from './NextPiece';
 
 const PanelWrapper = styled.div`
-  width: clamp(140px, 32vw, 220px);        /* escritorio */
-  padding: 1.5rem;
+  width: clamp(140px, 32vw, 220px);
+  padding: 1.25rem;
   background: linear-gradient(145deg,#1f1f1f,#2d2d2d);
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,.4);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  order: 1;                                /* junto al tablero */
+  gap: 0.8rem;
+  order: 1;
+  flex: 0 1 140px;   /* puede encoger pero no crecer */
+  min-width: 0;      /* necesario para que flex calcule bien */
 
   @media (max-width: 768px) {
-    width: 110px;
-    padding: 1rem;
-    gap: 0.6rem;
-    font-size: 0.8rem;
+    width: 100px;        /* coincide con la fórmula (100px + gap + bordes) */
+    flex: 0 1 100px;
+    padding: 0.8rem;
+    gap: 0.5rem;
+    font-size: 0.75rem;
     align-items: center;
-    text-align: center;
   }
 `;
 
 const Button = styled.button`
-  margin: 0.4rem 0.25rem;
-  padding: 0.45rem 0.7rem;
+  margin: 0.3rem 0.2rem;
+  padding: 0.4rem 0.6rem;
   background: linear-gradient(90deg,#333,#555);
   color: #fff;
   border: 1px solid #666;
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
   transition: background .3s, transform .2s;
@@ -47,16 +49,14 @@ const ScorePanel = ({
 }) => (
   <PanelWrapper>
     {!gameStarted ? (
-      <Button onClick={handleStart}>▶️ Iniciar</Button>
+      <Button onClick={handleStart}>▶️</Button>
     ) : (
       <>
-        <h3 style={{ margin:0 }}>Next</h3>
         <NextPiece tetromino={nextTetromino} />
 
-        <p>🎯 <strong>S:</strong> <span style={{color:'#00ffea'}}>{score}</span></p>
-        <p>📈 <strong>L:</strong> <span style={{color:'#5aff00'}}>{lines}</span></p>
-        <p>⚡ <strong>Lv:</strong> <span style={{color:'#ffcc00'}}>{level}</span></p>
-        {gameOver && <p style={{color:'red',fontWeight:'bold'}}>💀</p>}
+        <p>🎯 <strong>S:</strong> {score}</p>
+        <p>📈 <strong>L:</strong> {lines}</p>
+        <p>⚡ <strong>Lv:</strong> {level}</p>
 
         <div style={{display:'flex',justifyContent:'space-between',flexWrap:'wrap'}}>
           <Button onClick={handleStart}>🔄</Button>

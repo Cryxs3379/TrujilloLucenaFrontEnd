@@ -35,7 +35,7 @@ const GameArea = styled.div`
   flex-wrap: wrap;              /* permite que los controles salten abajo */
   justify-content: center;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 10px;
   color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
@@ -44,7 +44,13 @@ const GameArea = styled.div`
     align-items: flex-start;
     gap: 10px;             
   }
-`;
+     /* Deja que tablero y panel puedan encoger si el viewport es justo */
+ & > * {
+   min-width: 0;
+   flex-shrink: 1;
+ }
+`; 
+
 /* ----------------------------- */
 const Tetris = () => {
   /* estado general */

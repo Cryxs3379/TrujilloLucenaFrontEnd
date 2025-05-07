@@ -6,9 +6,8 @@ import { TETROMINOS } from '../utils/tetrominos';
 
 const Wrapper = styled.div`
   display: inline-block;
-  margin-left: 2rem;
-
-  h3 { color: #fff; }
+  margin-left: 1rem;
+  h3 { color: #fff; margin: 0 0 .25rem 0; font-size: 0.9rem; }
 `;
 
 const Grid = styled.div`

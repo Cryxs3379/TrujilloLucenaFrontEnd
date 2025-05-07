@@ -1,4 +1,3 @@
-// Stage.jsx
 import React from 'react';
 import styled from 'styled-components';
 import { CELL_SIZE } from '../utils/constants';
@@ -11,6 +10,8 @@ const StyledStage = styled.div`
   grid-template-columns: ${({ cols }) => `repeat(${cols}, ${CELL_SIZE})`};
   background: #111;
   border: 2px solid #333;
+  flex: 0 1 auto;        /* permite encoger dentro del flex‑row */
+  min-width: 0;          /* evita overflow del flex item        */
 `;
 
 const Stage = ({ stage }) => (
@@ -26,4 +27,3 @@ const Stage = ({ stage }) => (
 );
 
 export default Stage;
-
