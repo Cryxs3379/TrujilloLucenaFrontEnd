@@ -4,50 +4,54 @@ import { checkCollision } from '../utils/checkCollision';
 
 const GameBoard = ({
   player,
-  level,               // ← nuevo: nivel actual
+  level,               // se sigue recibiendo pero no lo usamos ya
   setGameOver,
   updatePlayerPos,
   stage,
-  dropTime,
+  dropTime,            // ← ritmo de caída: será nuestro lock‑delay
   gameStarted,
   paused,
   setDropTime,
   playerRef,
   lockStartRef,
 }) => {
-  /* ——— tablero siempre fresco ——— */
+  /* tablero siempre fresco */
   const stageRef = useRef(stage);
   useEffect(() => { stageRef.current = stage; }, [stage]);
 
-  /* ——— lock‑delay dinámico ——— */
-  const getLockDelay = () => Math.max(100, 500 - level * 20);
+  /* lock‑delay = dropTime (mínimo 100 ms por seguridad) */
+  const getLockDelay = () => Math.max(100, dropTime);
 
   const drop = () => {
-    const current       = playerRef.current;
-    const currentStage  = stageRef.current;
-    const LOCK_DELAY_MS = getLockDelay();
+    const current      = playerRef.current;
+    const currentStage = stageRef.current;
+    const LOCK_MS      = getLockDelay();
 
     if (!checkCollision(current, currentStage, { x: 0, y: 1 })) {
+      /* la pieza baja normalmente → se reinician contadores */
       updatePlayerPos({ x: 0, y: 1, collided: false });
-      lockStartRef.current = null;
+      lockStartRef.current = null;        // deja de estar apoyada
     } else {
+      /* la pieza está apoyada */
       if (lockStartRef.current === null) {
-        lockStartRef.current = Date.now();
+        lockStartRef.current = Date.now();  // empezamos a contar
         return;
       }
-      if (Date.now() - lockStartRef.current < LOCK_DELAY_MS) return;
 
+      if (Date.now() - lockStartRef.current < LOCK_MS) return;
+
+      /* fin del margen → fijar pieza */
       if (current.pos.y < 1) {
         setGameOver(true);
         setDropTime(null);
         return;
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
-      lockStartRef.current = null;
+      lockStartRef.current = null;        // comenzará la siguiente pieza
     }
   };
 
-  /* ——— intervalo de caída automática ——— */
+  /* caída automática */
   useEffect(() => {
     if (!paused && dropTime && gameStarted) {
       const id = setInterval(drop, dropTime);

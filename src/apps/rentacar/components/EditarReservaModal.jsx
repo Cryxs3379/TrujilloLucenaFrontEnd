@@ -1,6 +1,13 @@
-// EditarReservaModal.jsx
 import React, { useState, useEffect } from 'react';
-import { Modal, Box, TextField, Button } from '@mui/material';
+import {
+  Modal,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  IconButton
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const EditarReservaModal = ({ open, onClose, reserva, onConfirmar }) => {
   const [form, setForm] = useState({ ...reserva });
@@ -16,23 +23,68 @@ const EditarReservaModal = ({ open, onClose, reserva, onConfirmar }) => {
 
   const handleConfirmar = () => {
     onConfirmar(form);
+    alert('✅ Cliente confirmado y movido a la lista de clientes');
   };
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ /* estilos del modal */ }}>
-        <h2>Editar Reserva</h2>
-        <TextField label="Nombre" name="nombre" value={form.nombre} onChange={handleChange} fullWidth />
-        <TextField label="Apellidos" name="apellidos" value={form.apellidos} onChange={handleChange} fullWidth />
-        <TextField label="Email" name="email" value={form.email} onChange={handleChange} fullWidth />
-        <TextField label="DNI" name="dni" value={form.dni} onChange={handleChange} fullWidth />
-        <TextField label="Teléfono" name="telefono" value={form.telefono} onChange={handleChange} fullWidth />
-        <TextField label="Categoría Coche" name="categoriacoche" value={form.categoriacoche} onChange={handleChange} fullWidth />
-        <TextField label="Fecha Recogida" name="fecharecogercoche" type="date" value={form.fecharecogercoche} onChange={handleChange} fullWidth />
-        <TextField label="Hora Recogida" name="horarecogercoche" type="time" value={form.horarecogercoche} onChange={handleChange} fullWidth />
-        <TextField label="Fecha Devolución" name="fechadevolvercoche" type="date" value={form.fechadevolvercoche} onChange={handleChange} fullWidth />
-        <TextField label="Hora Devolución" name="horadevolvercoche" type="time" value={form.horadevolvercoche} onChange={handleChange} fullWidth />
-        <Button variant="contained" color="primary" onClick={handleConfirmar}>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '90%',
+          maxWidth: 900,
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          bgcolor: 'background.paper',
+          borderRadius: 2,
+          boxShadow: 24,
+          p: 4,
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h5">Editar Reserva</Typography>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+          {[
+            ['nombre', 'Nombre'],
+            ['apellidos', 'Apellidos'],
+            ['email', 'Email'],
+            ['dni', 'DNI'],
+            ['telefono', 'Teléfono'],
+            ['categoriacoche', 'Categoría Coche'],
+            ['fecharecogercoche', 'Fecha Recogida', 'date'],
+            ['horarecogercoche', 'Hora Recogida', 'time'],
+            ['fechadevolvercoche', 'Fecha Devolución', 'date'],
+            ['horadevolvercoche', 'Hora Devolución', 'time'],
+          ].map(([name, label, type = 'text']) => (
+            <TextField
+              key={name}
+              label={label}
+              name={name}
+              type={type}
+              value={form[name]}
+              onChange={handleChange}
+              fullWidth
+              sx={{ flex: '1 1 calc(50% - 16px)' }}
+              InputLabelProps={type !== 'text' ? { shrink: true } : {}}
+            />
+          ))}
+        </Box>
+
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleConfirmar}
+          sx={{ mt: 4 }}
+        >
           Confirmar Cliente
         </Button>
       </Box>
