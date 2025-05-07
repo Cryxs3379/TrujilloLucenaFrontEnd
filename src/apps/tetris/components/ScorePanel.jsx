@@ -14,7 +14,7 @@ const PanelWrapper = styled.div`
   order: 1;                                /* junto al tablero */
 
   @media (max-width: 768px) {
-    width: clamp(90px, 24vw, 120px);       /* 📱 extra‑estrecho */
+    width: 110px;
     padding: 1rem;
     gap: 0.6rem;
     font-size: 0.8rem;

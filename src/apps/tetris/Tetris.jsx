@@ -42,7 +42,7 @@ const GameArea = styled.div`
   @media (max-width: 768px) {
     flex-direction: row;    
     align-items: flex-start;
-    gap: 0.6rem;             
+    gap: 10px;             
   }
 `;
 /* ----------------------------- */
