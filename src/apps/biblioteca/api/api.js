@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const API_BASE = 'http://localhost:10000/api';
-const API_BASE = 'https://trujillolucenabackend.onrender.com/api';
+const API_BASE = 'http://localhost:10000/api';
+//const API_BASE = 'https://trujillolucenabackend.onrender.com/api';
 
 export const login = async (email, contrasena) => {
   const res = await axios.post(`${API_BASE}/login`, { email, contrasena });

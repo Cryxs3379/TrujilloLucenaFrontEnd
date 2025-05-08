@@ -40,7 +40,12 @@ const MovieCard = ({ pelicula }) => {
         src={pelicula.imagen}
         alt={pelicula.nombre}
         className="card-img-top"
-        style={{ borderRadius: '10px 10px 0 0' }}
+        style={{
+          width: '70%',
+          display: 'block',
+          margin: '0 auto',
+          borderRadius: '10px 10px 0 0',
+        }}
       />
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{pelicula.nombre}</h5>

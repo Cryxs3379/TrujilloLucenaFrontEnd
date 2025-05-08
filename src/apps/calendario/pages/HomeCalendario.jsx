@@ -76,6 +76,14 @@ const HomeCalendario = () => {
         <input type="datetime-local" id="swal-end" class="swal2-input" value="${info.dateStr}T01:00">
       `,
       focusConfirm: false,
+      didOpen: () => {
+        const popup = Swal.getPopup();
+        if (popup) {
+          popup.style.maxWidth = '600px';
+          popup.style.width = '90vw';
+          popup.style.overflowX = 'hidden';
+        }
+      },
       preConfirm: () => {
         const title = document.getElementById('swal-title').value;
         const description = document.getElementById('swal-description').value;
@@ -151,6 +159,14 @@ const HomeCalendario = () => {
         <input type="datetime-local" id="swal-end" class="swal2-input" value="${formatDateInput(info.event.end)}">
       `,
       focusConfirm: false,
+      didOpen: () => {
+        const popup = Swal.getPopup();
+        if (popup) {
+          popup.style.maxWidth = '600px';
+          popup.style.width = '90vw';
+          popup.style.overflowX = 'hidden';
+        }
+      },
       preConfirm: () => {
         const title = document.getElementById('swal-title').value;
         const description = document.getElementById('swal-description').value;
@@ -183,8 +199,7 @@ const HomeCalendario = () => {
         <p><strong>Inicio:</strong> ${formatDate(info.event.start)}</p>
         <p><strong>Fin:</strong> ${formatDate(info.event.end)}</p>
       `,
-      width: 600,
-      padding: '3em',
+      padding: '2em',
       color: '#716add',
       background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
       backdrop: `
@@ -192,6 +207,14 @@ const HomeCalendario = () => {
         left top
         no-repeat
       `,
+      didOpen: () => {
+        const popup = Swal.getPopup();
+        if (popup) {
+          popup.style.maxWidth = '600px';
+          popup.style.width = '90vw';
+          popup.style.overflowX = 'hidden';
+        }
+      },
     });
   };
 
