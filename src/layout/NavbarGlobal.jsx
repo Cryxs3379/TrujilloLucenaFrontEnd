@@ -14,7 +14,13 @@ const NavbarGlobal = () => {
 
   return (
     <nav className="bg-dark border-bottom border-black py-2">
-      <div className="container-fluid d-flex justify-content-center flex-wrap gap-2">
+      <div
+        className="container-fluid d-flex justify-content-center flex-wrap gap-2"
+        style={{
+          maxWidth: '360px',     // 🌐 ancho máx para forzar 2 botones por fila
+          margin: '0 auto',
+        }}
+      >
         <NavItem to="/"><span role="img" aria-label="Home">🏠</span> Home</NavItem>
         <NavItem to={rutaBiblioteca}><span role="img" aria-label="Biblioteca">🎬</span> Biblioteca</NavItem>
         <NavItem to="/logincalendario"><span role="img" aria-label="Calendario">📅</span> Calendario</NavItem>
@@ -30,6 +36,7 @@ const NavItem = ({ to, children }) => (
     to={to}
     className="btn btn-outline-dark bg-white d-flex align-items-center gap-2 px-3 py-2 fw-semibold shadow-sm text-decoration-none text-dark"
     style={{
+      flex: '1 1 calc(50% - 10px)',  // 📱 2 por fila siempre
       minWidth: '90px',
       maxWidth: '150px',
       fontSize: '0.95rem',
