@@ -14,39 +14,34 @@ const LoginCalendario = () => {
       const { token, user } = await loginCalendario(email, password);
       localStorage.setItem('tokenCalendario', token);
       localStorage.setItem('userCalendario', JSON.stringify(user));
-      navigate('/homecalendario'); // 👈 lo mandamos al home
+      navigate('/homecalendario');
     } catch (err) {
       setError('Credenciales incorrectas');
     }
   };
 
   return (
-    <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <form onSubmit={handleSubmit} style={{
-        background: '#fff', padding: '2rem', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-        display: 'flex', flexDirection: 'column', width: '300px'
-      }}>
-        <h2>Login Calendario 📅</h2>
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+      <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow" style={{ width: '300px' }}>
+        <h2 className="mb-3">Login Calendario 📅</h2>
         <input
           type="email"
+          className="form-control mb-3"
           placeholder="Correo"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ marginBottom: '1rem', padding: '0.8rem' }}
         />
         <input
           type="password"
+          className="form-control mb-3"
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ marginBottom: '1rem', padding: '0.8rem' }}
         />
-        <button type="submit" style={{ padding: '0.8rem', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px' }}>
-          Entrar
-        </button>
-        {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
+        <button type="submit" className="btn btn-primary w-100">Entrar</button>
+        {error && <p className="text-danger mt-3">{error}</p>}
       </form>
     </div>
   );

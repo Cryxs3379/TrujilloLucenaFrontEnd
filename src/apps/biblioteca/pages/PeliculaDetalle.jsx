@@ -18,58 +18,36 @@ const PeliculaDetalle = () => {
     fetchData();
   }, [id]);
 
-  if (!pelicula) return <p style={{ padding: '2rem' }}>Cargando...</p>;
+  if (!pelicula) return <p className="p-4">Cargando...</p>;
 
   return (
     <>
       {usuario && <NavbarBiblioteca />}
-      <div style={{
-        padding: '2rem',
-        width: '90vw',
-        maxWidth: '1100px',
-        margin: 'auto',
-        background: 'white',
-        borderRadius: '12px',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.05)',
-        fontFamily: 'Segoe UI, sans-serif'
-      }}>
-        <button onClick={() => navigate(-1)} style={{
-          background: 'transparent',
-          border: 'none',
-          color: '#007bff',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          marginBottom: '1rem'
-        }}>⬅️ Volver</button>
+      <div className="container my-4">
+        <div className="bg-white p-4 rounded shadow-sm">
+          <button onClick={() => navigate(-1)} className="btn btn-link text-decoration-none mb-3">
+            ⬅️ Volver
+          </button>
 
-        <h2 style={{ marginBottom: '1rem' }}>{pelicula.nombre}</h2>
+          <h2 className="mb-3">{pelicula.nombre}</h2>
 
-        <div style={{ textAlign: 'center' }}>
-          <img
-            src={pelicula.imagen}
-            alt={pelicula.nombre}
-            style={{
-              width: '300px',
-              height: 'auto',
-              borderRadius: '8px',
-              marginBottom: '1.5rem',
-              boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
-            }}
-          />
+          <div className="text-center">
+            <img
+              src={pelicula.imagen}
+              alt={pelicula.nombre}
+              className="img-fluid rounded mb-4"
+              style={{ maxWidth: '300px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}
+            />
+          </div>
+
+          <p><strong>Sinopsis:</strong> {pelicula.sinopsis}</p>
+          <p><strong>Fecha de creación:</strong> {new Date(pelicula.fecha_creacion).toLocaleDateString()}</p>
+          <p><strong>Ver legalmente:</strong> {pelicula.ver_legalmente?.join(', ')}</p>
+
+          <pre className="bg-light p-3 rounded mt-4">
+            <strong>Ver menos legalmente:</strong> {JSON.stringify(pelicula.ver_menos_legalmente, null, 2)}
+          </pre>
         </div>
-
-        <p><strong>Sinopsis:</strong> {pelicula.sinopsis}</p>
-        <p><strong>Fecha de creación:</strong> {new Date(pelicula.fecha_creacion).toLocaleDateString()}</p>
-        <p><strong>Ver legalmente:</strong> {pelicula.ver_legalmente?.join(', ')}</p>
-
-        <pre style={{
-          background: '#f8f8f8',
-          padding: '1rem',
-          borderRadius: '8px',
-          marginTop: '1rem'
-        }}>
-          <strong>Ver menos legalmente:</strong> {JSON.stringify(pelicula.ver_menos_legalmente, null, 2)}
-        </pre>
       </div>
     </>
   );

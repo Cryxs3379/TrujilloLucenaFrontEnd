@@ -3,7 +3,14 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { getEventos, crearEvento, eliminarEvento, actualizarEvento, getHistorial, crearHistorial } from '../api/apiCalendario';
+import {
+  getEventos,
+  crearEvento,
+  eliminarEvento,
+  actualizarEvento,
+  getHistorial,
+  crearHistorial,
+} from '../api/apiCalendario';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -12,7 +19,6 @@ const MySwal = withReactContent(Swal);
 const HomeCalendario = () => {
   const [eventos, setEventos] = useState([]);
   const [historial, setHistorial] = useState([]);
-
   const usuario = JSON.parse(localStorage.getItem('userCalendario'));
 
   useEffect(() => {
@@ -28,7 +34,7 @@ const HomeCalendario = () => {
         title: evento.title,
         start: evento.start,
         end: evento.end,
-        description: evento.description
+        description: evento.description,
       })));
     } catch (error) {
       console.error('❌ Error al cargar eventos:', error);
@@ -52,7 +58,7 @@ const HomeCalendario = () => {
         nombre: usuario.nombre,
         apellido: usuario.apellido,
         accion,
-        eventoTitulo
+        eventoTitulo,
       });
       cargarHistorial();
     } catch (err) {
@@ -63,11 +69,12 @@ const HomeCalendario = () => {
   const handleDateClick = async (info) => {
     const { value: formValues } = await MySwal.fire({
       title: 'Crear nueva nota 📋',
-      html:
-        '<input id="swal-title" class="swal2-input" placeholder="Título">' +
-        '<textarea id="swal-description" class="swal2-textarea" placeholder="Descripción"></textarea>' +
-        `<input type="datetime-local" id="swal-start" class="swal2-input" value="${info.dateStr}T00:00">` +
-        `<input type="datetime-local" id="swal-end" class="swal2-input" value="${info.dateStr}T01:00">`,
+      html: `
+        <input id="swal-title" class="swal2-input" placeholder="Título">
+        <textarea id="swal-description" class="swal2-textarea" placeholder="Descripción"></textarea>
+        <input type="datetime-local" id="swal-start" class="swal2-input" value="${info.dateStr}T00:00">
+        <input type="datetime-local" id="swal-end" class="swal2-input" value="${info.dateStr}T01:00">
+      `,
       focusConfirm: false,
       preConfirm: () => {
         const title = document.getElementById('swal-title').value;
@@ -78,18 +85,12 @@ const HomeCalendario = () => {
           Swal.showValidationMessage('Título y fechas son obligatorios');
         }
         return { title, description, start, end };
-      }
+      },
     });
 
     if (formValues) {
-      const nuevoEvento = {
-        title: formValues.title,
-        description: formValues.description,
-        start: formValues.start,
-        end: formValues.end
-      };
       try {
-        await crearEvento(nuevoEvento);
+        await crearEvento(formValues);
         cargarEventos();
         registrarHistorial('creó el evento', formValues.title);
       } catch (err) {
@@ -106,7 +107,7 @@ const HomeCalendario = () => {
       confirmButtonText: '✏️ Editar',
       denyButtonText: '👁️ Ver detalle',
       cancelButtonText: '🗑️ Eliminar',
-      reverseButtons: true
+      reverseButtons: true,
     });
 
     if (action === true) {
@@ -125,7 +126,7 @@ const HomeCalendario = () => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     });
 
     if (result.isConfirmed) {
@@ -143,11 +144,12 @@ const HomeCalendario = () => {
   const editarEvento = async (info) => {
     const { value: formValues } = await MySwal.fire({
       title: 'Editar nota 📋',
-      html:
-        `<input id="swal-title" class="swal2-input" placeholder="Título" value="${info.event.title}">` +
-        `<textarea id="swal-description" class="swal2-textarea" placeholder="Descripción">${info.event.extendedProps.description}</textarea>` +
-        `<input type="datetime-local" id="swal-start" class="swal2-input" value="${formatDateInput(info.event.start)}">` +
-        `<input type="datetime-local" id="swal-end" class="swal2-input" value="${formatDateInput(info.event.end)}">`,
+      html: `
+        <input id="swal-title" class="swal2-input" placeholder="Título" value="${info.event.title}">
+        <textarea id="swal-description" class="swal2-textarea" placeholder="Descripción">${info.event.extendedProps.description}</textarea>
+        <input type="datetime-local" id="swal-start" class="swal2-input" value="${formatDateInput(info.event.start)}">
+        <input type="datetime-local" id="swal-end" class="swal2-input" value="${formatDateInput(info.event.end)}">
+      `,
       focusConfirm: false,
       preConfirm: () => {
         const title = document.getElementById('swal-title').value;
@@ -158,18 +160,12 @@ const HomeCalendario = () => {
           Swal.showValidationMessage('Todos los campos son obligatorios');
         }
         return { title, description, start, end };
-      }
+      },
     });
 
     if (formValues) {
-      const eventoActualizado = {
-        title: formValues.title,
-        description: formValues.description,
-        start: formValues.start,
-        end: formValues.end
-      };
       try {
-        await actualizarEvento(info.event.id, eventoActualizado);
+        await actualizarEvento(info.event.id, formValues);
         cargarEventos();
         registrarHistorial('modificó el evento', formValues.title);
         Swal.fire('¡Actualizado!', 'La nota ha sido modificada', 'success');
@@ -195,7 +191,7 @@ const HomeCalendario = () => {
         rgba(0,0,123,0.4)
         left top
         no-repeat
-      `
+      `,
     });
   };
 
@@ -204,7 +200,7 @@ const HomeCalendario = () => {
       title: info.event.title,
       description: info.event.extendedProps.description,
       start: info.event.start,
-      end: info.event.end
+      end: info.event.end,
     };
     try {
       await actualizarEvento(info.event.id, eventoActualizado);
@@ -215,56 +211,29 @@ const HomeCalendario = () => {
     }
   };
 
-  const formatDateInput = (date) => {
-    const d = new Date(date);
-    return d.toISOString().slice(0, 16);
-  };
-
-  const formatDate = (date) => {
-    const d = new Date(date);
-    return d.toLocaleString();
-  };
+  const formatDateInput = (date) => new Date(date).toISOString().slice(0, 16);
+  const formatDate = (date) => new Date(date).toLocaleString();
 
   return (
-    <div style={{ padding: '2rem' }}>
-      {/* 🔵 Mostrar usuario */}
+    <div className="container py-4">
       {usuario && (
-  <div style={{
-    marginBottom: '1.5rem',
-    padding: '1rem',
-    backgroundColor: '#f0f0f0',
-    borderRadius: '10px',
-    fontFamily: 'Poppins, sans-serif',
-    fontWeight: 'bold',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <span>
-      Bienvenido {usuario.nombre} {usuario.apellido} 👋🏻
-    </span>
-    <button
-      onClick={() => {
-        localStorage.removeItem('userCalendario');
-        window.location.href = '/logincalendario'; // 👈 Volver al login
-      }}
-      style={{
-        padding: '0.5rem 1rem',
-        backgroundColor: '#dc3545',
-        color: 'white',
-        border: 'none',
-        borderRadius: '6px',
-        fontWeight: 'bold',
-        cursor: 'pointer'
-      }}
-    >
-      🔒 Cerrar sesión
-    </button>
-  </div>
-)}
+        <div className="d-flex justify-content-between align-items-center bg-light p-3 rounded shadow-sm mb-4">
+          <span className="fw-semibold">
+            Bienvenido {usuario.nombre} {usuario.apellido} 👋🏻
+          </span>
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={() => {
+              localStorage.removeItem('userCalendario');
+              window.location.href = '/logincalendario';
+            }}
+          >
+            🔒 Cerrar sesión
+          </button>
+        </div>
+      )}
 
-
-      <h2>📅 Calendario de Eventos</h2>
+      <h2 className="mb-3">📅 Calendario de Eventos</h2>
 
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -272,7 +241,7 @@ const HomeCalendario = () => {
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
         events={eventos}
         dateClick={handleDateClick}
@@ -281,30 +250,15 @@ const HomeCalendario = () => {
         eventDrop={handleEventDrop}
       />
 
-      {/* 📜 Historial debajo */}
-      <h3 style={{ marginTop: '3rem' }}>🕑 Historial de Acciones</h3>
-      <div style={{
-        marginTop: '1rem',
-        backgroundColor: '#f9f9f9',
-        borderRadius: '8px',
-        padding: '1rem',
-        maxHeight: '300px',
-        overflowY: 'auto',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-      }}>
+      <h3 className="mt-5">🕑 Historial de Acciones</h3>
+      <div className="bg-white rounded p-3 mt-3 shadow-sm" style={{ maxHeight: '300px', overflowY: 'auto' }}>
         {historial.length === 0 ? (
-          <p>❌ No hay acciones registradas todavía.</p>
+          <p className="text-muted">❌ No hay acciones registradas todavía.</p>
         ) : (
-          historial.map((h) => (
-            <div key={h._id} style={{
-              marginBottom: '1rem',
-              padding: '0.5rem',
-              backgroundColor: '#ffffff',
-              borderRadius: '6px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-            }}>
+          historial.map(h => (
+            <div key={h._id} className="border-bottom pb-2 mb-2">
               <p><strong>{h.nombre} {h.apellido}</strong> {h.accion} ➔ <em>{h.eventoTitulo}</em></p>
-              <p style={{ fontSize: '0.8rem', color: '#666' }}>{new Date(h.fecha).toLocaleString()}</p>
+              <p className="text-muted small">{new Date(h.fecha).toLocaleString()}</p>
             </div>
           ))
         )}

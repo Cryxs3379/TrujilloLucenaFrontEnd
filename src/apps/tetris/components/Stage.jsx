@@ -1,3 +1,6 @@
+// Stage.jsx
+// ================================
+
 import React from 'react';
 import styled from 'styled-components';
 import { CELL_SIZE } from '../utils/constants';
@@ -6,12 +9,12 @@ import { TETROMINOS } from '../utils/tetrominos';
 
 const StyledStage = styled.div`
   display: grid;
-  grid-template-rows:    ${({ rows }) => `repeat(${rows}, ${CELL_SIZE})`};
+  grid-template-rows: ${({ rows }) => `repeat(${rows}, ${CELL_SIZE})`};
   grid-template-columns: ${({ cols }) => `repeat(${cols}, ${CELL_SIZE})`};
   background: #111;
   border: 2px solid #333;
-  min-width: calc(${CELL_SIZE} * 12);  // 🧱 asegura espacio mínimo horizontal
-  overflow-x: auto;                    // 🔄 scroll si no cabe
+  min-width: calc(${CELL_SIZE} * 12);
+  overflow-x: auto;
   flex: 0 1 auto;
   flex-shrink: 0;
 `;
@@ -21,7 +24,7 @@ const Stage = ({ stage }) => (
     {stage.map((row, y) =>
       row.map((cell, x) => {
         const cellType = cell[0];
-        const color    = TETROMINOS[cellType]?.color || '0, 0, 0';
+        const color = TETROMINOS[cellType]?.color || '0, 0, 0';
         return <Cell key={`${y}-${x}`} type={cellType} color={color} />;
       })
     )}
@@ -29,3 +32,6 @@ const Stage = ({ stage }) => (
 );
 
 export default Stage;
+
+
+// ================================ 

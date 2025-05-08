@@ -13,7 +13,7 @@ const MovieCard = ({ pelicula }) => {
   };
 
   const handleLikeToggle = async (e) => {
-    e.stopPropagation(); // ⛔ evita que dispare el click de navegación
+    e.stopPropagation();
 
     try {
       let updatedUser;
@@ -24,7 +24,7 @@ const MovieCard = ({ pelicula }) => {
       }
 
       localStorage.setItem('usuario', JSON.stringify(updatedUser));
-      window.location.reload(); // hasta tener estado global
+      window.location.reload(); // hasta implementar estado global
     } catch (err) {
       console.error('❌ Error al actualizar like:', err);
     }
@@ -32,43 +32,28 @@ const MovieCard = ({ pelicula }) => {
 
   return (
     <div
-  onClick={handleClickDetalle}
-  style={{
-    border: '1px solid #eee',
-    borderRadius: '10px',
-    width: '220px',
-    padding: '1rem',
-    cursor: 'pointer',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
-    transition: 'transform 0.2s',
-    background: 'white'
-  }}
->
-  <img src={pelicula.imagen} alt={pelicula.nombre} style={{
-    width: '100%',
-    borderRadius: '6px',
-    marginBottom: '0.5rem'
-  }} />
-  <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{pelicula.nombre}</h3>
-  <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}><em>Haz clic para ver más</em></p>
-  <button
-  type="button"      
-  onClick={handleLikeToggle}
-  style={{
-    padding: '0.5rem 1rem',
-    background: yaLeGusta ? '#dc3545' : '#28a745',
-    color: 'white',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '0.9rem',
-    cursor: 'pointer'
-  }}
->
-  {yaLeGusta ? '💔 Quitar de Me gusta' : '❤️ Me gusta'}
-</button>
-
-</div>
-
+      className="card h-100 shadow-sm"
+      style={{ cursor: 'pointer' }}
+      onClick={handleClickDetalle}
+    >
+      <img
+        src={pelicula.imagen}
+        alt={pelicula.nombre}
+        className="card-img-top"
+        style={{ borderRadius: '10px 10px 0 0' }}
+      />
+      <div className="card-body d-flex flex-column">
+        <h5 className="card-title">{pelicula.nombre}</h5>
+        <p className="card-text text-muted"><em>Haz clic para ver más</em></p>
+        <button
+          onClick={handleLikeToggle}
+          type="button"
+          className={`btn mt-auto ${yaLeGusta ? 'btn-danger' : 'btn-success'}`}
+        >
+          {yaLeGusta ? '💔 Quitar de Me gusta' : '❤️ Me gusta'}
+        </button>
+      </div>
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ const NavBar = ({ onLogout }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('usuario');
-    onLogout(); // 👈 ACTUALIZA EL ESTADO
+    onLogout();
     navigate('/');
   };
 
@@ -14,33 +14,16 @@ const NavBar = ({ onLogout }) => {
   if (!usuario) return null;
 
   return (
-    <nav style={{
-      padding: '1rem 2rem',
-      background: '#ffffff',
-      boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      fontFamily: 'Segoe UI, sans-serif'
-    }}>
-      <div>
-        <Link to="/biblioteca" style={{ marginRight: '1.5rem', textDecoration: 'none', color: '#333', fontWeight: '500' }}>📚 Biblioteca</Link>
-        <Link to="/megustan" style={{ textDecoration: 'none', color: '#333', fontWeight: '500' }}>❤️ Me gustan</Link>
+    <nav className="container-fluid py-3 px-4 bg-white shadow-sm d-flex justify-content-between align-items-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+      <div className="d-flex gap-4 flex-wrap">
+        <Link to="/biblioteca" className="text-decoration-none text-dark fw-medium">📚 Biblioteca</Link>
+        <Link to="/megustan" className="text-decoration-none text-dark fw-medium">❤️ Me gustan</Link>
       </div>
-      <button onClick={handleLogout} style={{
-        background: '#ff4d4f',
-        color: 'white',
-        border: 'none',
-        padding: '0.5rem 1rem',
-        borderRadius: '6px',
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        transition: 'background 0.3s'
-      }}>🚪 Cerrar sesión</button>
+      <button onClick={handleLogout} className="btn btn-danger fw-bold">
+        🚪 Cerrar sesión
+      </button>
     </nav>
-    
   );
 };
-
 
 export default NavBar;

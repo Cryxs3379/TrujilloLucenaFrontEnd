@@ -8,19 +8,21 @@ const MeGustan = () => {
 
   return (
     <div>
-      {usuario && <NavbarBiblioteca />} {/* navbar local visible solo logueado */}
-    <div style={{ padding: '2rem' }}>
-      <h2>🎬 Películas que me gustan</h2>
-      {likes.length === 0 ? (
-        <p>No has dado like a ninguna película todavía.</p>
-      ) : (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-          {likes.map((pelicula, i) => (
-            <MovieCard key={pelicula._id || i} pelicula={pelicula} />
-          ))}
-        </div>
-      )}
-    </div>
+      {usuario && <NavbarBiblioteca />}
+      <div className="container py-4">
+        <h2 className="mb-4">🎬 Películas que me gustan</h2>
+        {likes.length === 0 ? (
+          <p>No has dado like a ninguna película todavía.</p>
+        ) : (
+          <div className="row g-4">
+            {likes.map((pelicula, i) => (
+              <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={pelicula._id || i}>
+                <MovieCard pelicula={pelicula} />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
