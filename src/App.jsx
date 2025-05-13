@@ -13,10 +13,12 @@ import './App.css';
 import Tetris from './apps/tetris/Tetris';
 
 // 🚗 Rentacar Imports
+import Informacion from './apps/rentacar/pages/Informacion';
 import Oficina from './apps/rentacar/pages/Oficina';
 import Reservas from './apps/rentacar/pages/Reservas';
 import Garaje from './apps/rentacar/pages/Garaje';
 import NavbarRentacar from './apps/rentacar/components/NavbarRentacar';
+import MisWebs from './apps/miswebs/miswebs';
 
 function AppWrapper() {
   const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('usuario')));
@@ -60,12 +62,14 @@ function AppWrapper() {
 
         {/* 🚗 Rentacar Layout con subrutas */}
         <Route path="/rentacar" element={<NavbarRentacar />}>
-          <Route index element={<Navigate to="oficina" replace />} />
+          <Route index element={<Navigate to="informacion" replace />} />
+           <Route path="informacion" element={<Informacion />} />
           <Route path="oficina" element={<Oficina />} />
           <Route path="reservas" element={<Reservas />} />
           <Route path="garaje" element={<Garaje />} />
         </Route>
         <Route path="/tetris" element={<Tetris />} />
+        <Route path="/MisWebs" element={<MisWebs />} />
       </Routes>
     </BrowserRouter>
   );

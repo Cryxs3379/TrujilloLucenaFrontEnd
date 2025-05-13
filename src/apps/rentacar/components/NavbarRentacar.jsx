@@ -6,6 +6,7 @@ const NavbarRentacar = () => {
   const location = useLocation();
 
   const tabs = [
+    { path: '/rentacar/informacion', label: '📅 Informacion' },
     { path: '/rentacar/reservas', label: '📅 Reservas' },
     { path: '/rentacar/oficina', label: '🏢 Oficina' },   
     { path: '/rentacar/garaje', label: '🚗 Garaje' }
