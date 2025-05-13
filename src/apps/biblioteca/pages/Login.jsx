@@ -51,8 +51,8 @@ const Login = ({ onLogin }) => {
 
         <h3 style={styles.subheading}>5️⃣ Usuarios de prueba</h3>
         <ul>
-          <li><code>usuariocalendario1 / 123456</code></li>
-          <li><code>usuariocalendario2 / 123456</code></li>
+          <li><code>usuariocalendario1@gmail.com / 123456</code></li>
+          <li><code>usuariocalendario2@gmail.com / 123456</code></li>
         </ul>
 
         <p style={styles.summary}>

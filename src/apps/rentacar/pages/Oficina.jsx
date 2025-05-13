@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getReservas, getClientes, confirmarCliente } from '../api/apiRentacar';
 import EditarReservaModal from '../components/EditarReservaModal';
+import { eliminarCliente } from '../api/apiRentacar';
 
 const Oficina = () => {
   const [reservas, setReservas] = useState([]);
@@ -22,6 +23,21 @@ const Oficina = () => {
     setReservaSeleccionada(reserva);
     setModalAbierto(true);
   };
+  
+  const handleEliminarCliente = async (cliente) => {
+  const confirmado = window.confirm(`¿Seguro que deseas eliminar al cliente ${cliente.nombre} ${cliente.apellidos}?`);
+  if (!confirmado) return;
+
+  try {
+    await eliminarCliente(cliente.id, cliente.idcoche);
+    const dataClientes = await getClientes();
+    const dataReservas = await getReservas();
+    setClientes(dataClientes);
+    setReservas(dataReservas);
+  } catch (error) {
+    console.error('❌ Error al eliminar cliente:', error);
+  }
+};
 
   const handleConfirmarCliente = async (reservaActualizada) => {
     try {
@@ -90,29 +106,46 @@ const Oficina = () => {
               <th>Email</th>
               <th>DNI</th>
               <th>Teléfono</th>
-              <th>Categoría Coche</th>
               <th>Fecha Recogida</th>
               <th>Hora Recogida</th>
               <th>Fecha Devolución</th>
               <th>Hora Devolución</th>
+              <th>ID Coche</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Categoría</th>
+              <th>Precio/Día</th>
             </tr>
           </thead>
-          <tbody>
-            {clientes.map(cliente => (
-              <tr key={cliente.id}>
-                <td>{cliente.nombre}</td>
-                <td>{cliente.apellidos}</td>
-                <td>{cliente.email}</td>
-                <td>{cliente.dni}</td>
-                <td>{cliente.telefono}</td>
-                <td>{cliente.categoriacoche}</td>
-                <td>{cliente.fecharecogercoche}</td>
-                <td>{cliente.horarecogercoche}</td>
-                <td>{cliente.fechadevolvercoche}</td>
-                <td>{cliente.horadevolvercoche}</td>
-              </tr>
-            ))}
-          </tbody>
+   <tbody>
+  {clientes.map(cliente => (
+    <tr key={cliente.id}>
+      <td>{cliente.nombre}</td>
+      <td>{cliente.apellidos}</td>
+      <td>{cliente.email}</td>
+      <td>{cliente.dni}</td>
+      <td>{cliente.telefono}</td>
+      <td>{cliente.fecharecogercoche}</td>
+      <td>{cliente.horarecogercoche}</td>
+      <td>{cliente.fechadevolvercoche}</td>
+      <td>{cliente.horadevolvercoche}</td>
+      <td>{cliente.idcoche}</td>
+      <td>{cliente.marcacoche}</td>
+      <td>{cliente.modelocoche}</td>
+      <td>{cliente.categoriacoche}</td>
+      <td>{cliente.precio} €</td>
+      <td>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleEliminarCliente(cliente)}
+        >
+          Eliminar
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
         </table>
       </div>
 

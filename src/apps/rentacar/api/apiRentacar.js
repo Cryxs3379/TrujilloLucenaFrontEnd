@@ -29,3 +29,9 @@ export const confirmarCliente = async (reserva) => {
   const res = await axios.post(`${API_BASE}/confirmar-cliente`, reserva);
   return res.data;
 };
+
+export const eliminarCliente = async (clienteId, idcoche) => {
+  const res = await axios.delete(`${API_BASE}/eliminar-cliente/${clienteId}?idcoche=${idcoche}`);
+  return res.data;
+};
+

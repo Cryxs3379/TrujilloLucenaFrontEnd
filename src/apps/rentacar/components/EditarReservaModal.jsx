@@ -1,3 +1,4 @@
+//EditarReservaModal.jsx
 import React, { useState, useEffect } from 'react';
 import {
   Modal,
@@ -5,20 +6,53 @@ import {
   TextField,
   Button,
   Typography,
-  IconButton
+  IconButton,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { getCoches } from '../api/apiRentacar';
 
 const EditarReservaModal = ({ open, onClose, reserva, onConfirmar }) => {
   const [form, setForm] = useState({ ...reserva });
+  const [cochesDisponibles, setCochesDisponibles] = useState([]);
 
   useEffect(() => {
     setForm({ ...reserva });
+
+    const fetchCoches = async () => {
+      try {
+        const todosLosCoches = await getCoches();
+       const disponibles = todosLosCoches.filter(coche => coche.disponible === 'si');
+
+        setCochesDisponibles(disponibles);
+      } catch (err) {
+        console.error('❌ Error al cargar coches:', err);
+      }
+    };
+
+    fetchCoches();
   }, [reserva]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSeleccionarCoche = (e) => {
+    const cocheSeleccionadoId = e.target.value;
+const coche = cochesDisponibles.find(c => String(c.id) === String(cocheSeleccionadoId));
+    if (coche) {
+      setForm(prev => ({
+        ...prev,
+        idcoche: coche.id,
+        modelocoche: coche.modelo,
+        marcacoche: coche.marca,
+        precio: coche.precio
+      }));
+    }
   };
 
   const handleConfirmar = () => {
@@ -76,6 +110,23 @@ const EditarReservaModal = ({ open, onClose, reserva, onConfirmar }) => {
               InputLabelProps={type !== 'text' ? { shrink: true } : {}}
             />
           ))}
+
+          {/* 🔽 Campo desplegable de coches */}
+          <FormControl fullWidth sx={{ flex: '1 1 100%' }}>
+            <InputLabel id="select-coche-label">Seleccionar Coche</InputLabel>
+            <Select
+              labelId="select-coche-label"
+              value={form.idcoche || ''}
+              onChange={handleSeleccionarCoche}
+              label="Seleccionar Coche"
+            >
+              {cochesDisponibles.map(coche => (
+                <MenuItem key={coche.id} value={coche.id}>
+                  {`${coche.id} - ${coche.marca} ${coche.modelo} - ${coche.categoria} - ${coche.precio} €/día`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
 
         <Button
