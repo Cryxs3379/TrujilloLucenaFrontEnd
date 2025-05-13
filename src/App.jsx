@@ -18,7 +18,7 @@ import Oficina from './apps/rentacar/pages/Oficina';
 import Reservas from './apps/rentacar/pages/Reservas';
 import Garaje from './apps/rentacar/pages/Garaje';
 import NavbarRentacar from './apps/rentacar/components/NavbarRentacar';
-import MisWebs from './apps/miswebs/miswebs';
+import MisWebs from './apps/miswebs/MisWebs';
 
 
 function AppWrapper() {
