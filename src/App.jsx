@@ -20,6 +20,7 @@ import Garaje from './apps/rentacar/pages/Garaje';
 import NavbarRentacar from './apps/rentacar/components/NavbarRentacar';
 import MisWebs from './apps/miswebs/miswebs';
 
+
 function AppWrapper() {
   const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('usuario')));
 
