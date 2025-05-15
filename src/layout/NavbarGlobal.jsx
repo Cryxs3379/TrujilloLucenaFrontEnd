@@ -35,7 +35,7 @@ const NavbarGlobal = () => {
 
       {showWarning && (
         <div className="navbar-info">
-          ⚠️ Esta web puede tardar hasta 30 segundos en conectarse con el backend.
+          ⚠️ Esta web puede tardar hasta 60 segundos en conectarse con el backend.
         </div>
       )}
 
