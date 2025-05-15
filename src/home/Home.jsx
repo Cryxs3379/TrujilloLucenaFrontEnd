@@ -19,17 +19,19 @@ const Home = () => {
           </div>
 
           <div className="col-md-6 text-center">
-            <div
-              style={{
-                width: '160px',
-                height: '160px',
-                borderRadius: '50%',
-                backgroundColor: '#222',
-                border: '2px solid #f5d76e',
-                margin: '0 auto 1.5rem',
-              }}
-            />
-            <span className="text-muted small d-block mb-3">Tu foto aquí</span>
+      <img
+  src="/images/TrujilloLucena.png"
+  alt="Pedro Trujillo Lucena"
+  style={{
+    width: '160px',
+    height: '160px',
+    borderRadius: '50%',
+    border: '2px solid #f5d76e',
+    objectFit: 'cover',
+    marginBottom: '1.5rem'
+  }}
+/>
+
             <div>
               <h2 className="text-warning mb-1">Pedro Trujillo Lucena</h2>
               <p>Málaga, España</p>
