@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -7,19 +7,37 @@ const NavbarGlobal = () => {
   const navigate = useNavigate();
   const rutaBiblioteca = usuario ? "/biblioteca" : "/login";
 
+  const [showWarning, setShowWarning] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWarning(false);
+    }, 20000);
+
+    return () => clearTimeout(timer); // limpieza por si el componente se desmonta
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
   return (
-    <nav className="navbar-global">
-      <NavItem to="/"><span role="img" aria-label="Home">🏠</span> Home</NavItem>
-      <NavItem to={rutaBiblioteca}><span role="img" aria-label="Biblioteca">🎬</span> Biblioteca</NavItem>
-      <NavItem to="/logincalendario"><span role="img" aria-label="Calendario">📅</span> Calendario</NavItem>
-      <NavItem to="/rentacar"><span role="img" aria-label="Rentacar">🚗</span> Rentacar</NavItem>
-      <NavItem to="/tetris"><span role="img" aria-label="Tetris">🧩</span> Tetris</NavItem>
-       <NavItem to="/miswebs"><span role="img" aria-label="miswebs">🧩</span> Mis Webs</NavItem>
+    <>
+      <nav className="navbar-global">
+        <NavItem to="/"><span role="img" aria-label="Home">🏠</span> Home</NavItem>
+        <NavItem to={rutaBiblioteca}><span role="img" aria-label="Biblioteca">🎬</span> Biblioteca</NavItem>
+        <NavItem to="/logincalendario"><span role="img" aria-label="Calendario">📅</span> Calendario</NavItem>
+        <NavItem to="/rentacar"><span role="img" aria-label="Rentacar">🚗</span> Rentacar</NavItem>
+        <NavItem to="/tetris"><span role="img" aria-label="Tetris">🧩</span> Tetris</NavItem>
+        <NavItem to="/miswebs"><span role="img" aria-label="miswebs">🧩</span> Mis Webs</NavItem>
+      </nav>
+
+      {showWarning && (
+        <div className="navbar-info">
+          ⚠️ Esta web puede tardar hasta 30 segundos en conectarse con el backend.
+        </div>
+      )}
 
       <style>{`
         .navbar-global {
@@ -62,6 +80,16 @@ const NavbarGlobal = () => {
           transform: scale(1.05);
         }
 
+        .navbar-info {
+          text-align: center;
+          padding: 0.5rem;
+          font-size: 0.95rem;
+          background-color: #ffeeba;
+          color: #856404;
+          font-family: 'Poppins, sans-serif';
+          transition: opacity 0.5s ease-in-out;
+        }
+
         @media (max-width: 768px) {
           .navbar-global {
             gap: 0.35rem;
@@ -75,6 +103,11 @@ const NavbarGlobal = () => {
             max-width: 130px;
             font-size: 0.85rem;
             gap: 0.3rem;
+          }
+
+          .navbar-info {
+            font-size: 0.85rem;
+            padding: 0.4rem;
           }
         }
 
@@ -92,9 +125,14 @@ const NavbarGlobal = () => {
             font-size: 0.75rem;
             gap: 0.25rem;
           }
+
+          .navbar-info {
+            font-size: 0.75rem;
+            padding: 0.3rem;
+          }
         }
       `}</style>
-    </nav>
+    </>
   );
 };
 
