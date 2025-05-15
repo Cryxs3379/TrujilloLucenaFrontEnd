@@ -23,10 +23,6 @@ const Informacion = () => {
           Además, se dispone de controles para eliminar registros, lo cual resulta útil en caso de cancelaciones o errores. Todo el proceso se ha pensado para facilitar una operativa limpia y directa con una mínima curva de aprendizaje.
         </p>
 
-        <h4 className="mt-4 text-primary">🚘 Asignación Inteligente de Vehículos</h4>
-        <p style={{ lineHeight: '1.8rem', fontSize: '1rem', color: '#555' }}>
-          La aplicación consulta dinámicamente todos los vehículos disponibles y permite seleccionar de forma sencilla aquel que se ajuste a las necesidades del cliente. El sistema actualiza los datos automáticamente (marca, modelo, precio y categoría), evitando errores de transcripción y mejorando la trazabilidad de cada operación.
-        </p>
 
         <h4 className="mt-4 text-primary">📊 Visibilidad Total sobre Clientes y Flota</h4>
         <p style={{ lineHeight: '1.8rem', fontSize: '1rem', color: '#555' }}>

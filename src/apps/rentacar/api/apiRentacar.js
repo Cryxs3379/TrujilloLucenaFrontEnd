@@ -35,3 +35,9 @@ export const eliminarCliente = async (clienteId, idcoche) => {
   return res.data;
 };
 
+export const actualizarCliente = async (id, campos) => {
+  const res = await axios.patch(`${API_BASE}/clientes/${id}`, campos);
+  return res.data;
+};
+
+

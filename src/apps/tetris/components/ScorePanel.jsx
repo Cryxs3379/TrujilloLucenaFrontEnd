@@ -57,14 +57,14 @@ const ScorePanel = ({
       <>
         <NextPiece tetromino={nextTetromino} />
 
-        <p>🎯 <strong>S:</strong> {score}</p>
-        <p>📈 <strong>L:</strong> {lines}</p>
-        <p>⚡ <strong>Lv:</strong> {level}</p>
+        <p>🎯 <strong>Score:</strong> {score}</p>
+        <p>📈 <strong>Lineas:</strong> {lines}</p>
+        <p>⚡ <strong>Lvl:</strong> {level}</p>
 
         <div style={{display:'flex',justifyContent:'space-between',flexWrap:'wrap'}}>
-          <Button onClick={handleStart}>🔄</Button>
+          <Button onClick={handleStart}>🔄 reiniciar</Button>
           <Button onClick={() => setPaused(p=>!p)} disabled={gameOver}>
-            {paused ? '▶️' : '⏸️'}
+            {paused ? '▶️ reanudar' : '⏸️ pausa'}
           </Button>
         </div>
       </>

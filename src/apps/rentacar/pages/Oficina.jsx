@@ -70,6 +70,7 @@ const Oficina = () => {
               <th>Fecha Devolución</th>
               <th>Hora Devolución</th>
               <th>Acciones</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -85,6 +86,7 @@ const Oficina = () => {
                 <td>{reserva.horarecogercoche}</td>
                 <td>{reserva.fechadevolvercoche}</td>
                 <td>{reserva.horadevolvercoche}</td>
+                
                 <td className="text-center">
                   <button className="btn btn-sm btn-primary" onClick={() => handleEditar(reserva)}>
                     Editar
@@ -115,6 +117,10 @@ const Oficina = () => {
               <th>Modelo</th>
               <th>Categoría</th>
               <th>Precio/Día</th>
+              <th>Trabajador asignado</th>
+              <th>Notas trabajador </th>
+              <th>Acciones</th>
+              
             </tr>
           </thead>
    <tbody>
@@ -134,6 +140,8 @@ const Oficina = () => {
       <td>{cliente.modelocoche}</td>
       <td>{cliente.categoriacoche}</td>
       <td>{cliente.precio} €</td>
+      <td>{cliente.trabajadorasignado}</td>
+      <td>{cliente.notastrabajador}</td>
       <td>
         <button
           className="btn btn-danger btn-sm"
