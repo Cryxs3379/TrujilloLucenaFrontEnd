@@ -23,47 +23,54 @@ const Login = ({ onLogin }) => {
 
   return (
     <div style={styles.container}>
-      {/* Panel informativo */}
+      {/* Panel informativo optimizado */}
       <div style={styles.left}>
-        <h2 style={styles.heading}>🗂 Arquitectura ― “Netflix de bolsillo”</h2>
-        <p><strong>MERN:</strong> MongoDB · Express/Node · React.</p>
+        <h2 style={styles.heading}>🎬 Netflix de Bolsillo</h2>
+        <p>
+          Una aplicación fullstack desarrollada con el stack <strong>MERN</strong> (MongoDB, Express, React y Node.js)
+          que replica funcionalidades de una plataforma de streaming.
+        </p>
 
-        <h3 style={styles.subheading}>1️⃣ Interfaz (React)</h3>
+        <h3 style={styles.subheading}>🚀 Funcionalidades principales</h3>
         <ul>
-          <li>Lista el catálogo, muestra botón ❤️ y sección de favoritos.</li>
+          <li>Explora un catálogo dinámico de películas y accede a detalles completos.</li>
+          <li>Marca tus películas favoritas y gestiona tu lista personal.</li>
+          <li>Recomendaciones personalizadas basadas en títulos similares.</li>
+          <li>Autenticación segura y gestión de sesión con rutas protegidas.</li>
+          <li>Persistencia de datos y favoritos en MongoDB.</li>
         </ul>
 
-        <h3 style={styles.subheading}>2️⃣ API (Express)</h3>
+        <h3 style={styles.subheading}>🛠️ Tecnologías utilizadas</h3>
         <ul>
-          <li><code>PUT /usuarios/:id/like</code> agrega la película al array.</li>
-          <li><code>DELETE /usuarios/:id/like</code> la quita del array.</li>
+          <li>Frontend: React, React Router, Bootstrap.</li>
+          <li>Backend: Node.js y Express (API REST).</li>
+          <li>Base de datos: MongoDB con listas personalizadas de favoritos.</li>
+          <li>Gestión de estado: localStorage para la sesión y los favoritos.</li>
         </ul>
 
-        <h3 style={styles.subheading}>3️⃣ Base de datos (MongoDB)</h3>
+        <h3 style={styles.subheading}>🎯 ¿Qué aprendí con este proyecto?</h3>
         <ul>
-          <li>Cada documento <code>Usuario</code> aloja su propio array <code>peliculaslike</code>.</li>
+          <li>Diseño de rutas protegidas y gestión de sesiones de usuario.</li>
+          <li>Construcción de componentes reutilizables y escalables.</li>
+          <li>Implementación de recomendaciones dinámicas.</li>
+          <li>Uso de React Router para una experiencia SPA fluida.</li>
         </ul>
 
-        <h3 style={styles.subheading}>4️⃣ Sesión (localStorage)</h3>
+        <h3 style={styles.subheading}>🔑 Usuarios de prueba</h3>
         <ul>
-          <li>El usuario completo se guarda tras el login y tras cada cambio de likes.</li>
-        </ul>
-
-        <h3 style={styles.subheading}>5️⃣ Usuarios de prueba</h3>
-        <ul>
-          <li><code>usuariocalendario1@gmail.com / 123456</code></li>
-          <li><code>usuariocalendario2@gmail.com / 123456</code></li>
+          <li><code>usuariobiblioteca1@gmail.com / 123456</code></li>
+          <li><code>usuariobiblioteca2@gmail.com / 123456</code></li>
         </ul>
 
         <p style={styles.summary}>
-          En síntesis: catálogo global + favoritos personales persistentes, todo actualizado al instante.
+          Este proyecto demuestra mis habilidades fullstack y mi enfoque en la experiencia de usuario.
         </p>
       </div>
 
       {/* Formulario de inicio de sesión */}
       <div style={styles.right}>
         <form onSubmit={handleSubmit} style={styles.form}>
-          <h2 style={styles.title}>🎬 Iniciar sesión</h2>
+          <h2 style={styles.title}>🔐 Iniciar sesión</h2>
           <input
             type="email"
             placeholder="Correo electrónico"
@@ -122,30 +129,30 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    maxWidth: '340px',
+    maxWidth: '480px', // Aumentamos el ancho
   },
   title: {
     marginBottom: '1.5rem',
     textAlign: 'center',
     color: '#333',
-    fontSize: '1.5rem',
+    fontSize: '2rem', // Título más grande
   },
   input: {
-    padding: '0.8rem',
+    padding: '0.9rem', // Inputs más grandes
     marginBottom: '1rem',
     border: '1px solid #ccc',
     borderRadius: '6px',
-    fontSize: '1rem',
+    fontSize: '1.1rem',
     outline: 'none',
   },
   button: {
-    padding: '0.8rem',
+    padding: '0.9rem',
     backgroundColor: '#007bff',
     color: 'white',
     border: 'none',
     borderRadius: '6px',
     fontWeight: 'bold',
-    fontSize: '1rem',
+    fontSize: '1.2rem', // Botón más grande
     cursor: 'pointer',
     transition: 'background-color 0.3s',
   },
@@ -160,7 +167,7 @@ const styles = {
     marginBottom: '1rem',
   },
   subheading: {
-    marginTop: '1.5rem',
+    marginTop: '1.2rem',
     color: '#333',
   },
   summary: {

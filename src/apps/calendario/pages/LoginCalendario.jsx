@@ -1,3 +1,4 @@
+// LoginCalendario.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginCalendario } from '../api/apiCalendario';
@@ -21,71 +22,160 @@ const LoginCalendario = () => {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div className="row w-100 px-3">
-        {/* 📘 Lado Izquierdo: Documentación */}
-        <div className="col-md-6 mb-4 mb-md-0 bg-white rounded p-4 shadow">
-          <h3 className="text-primary mb-3">🧠 Pila tecnológica</h3>
-          <table className="table table-bordered table-sm">
-            <thead className="table-light">
-              <tr>
-                <th>Capa</th>
-                <th>Tecnología</th>
-                <th>Rol</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Front-end</td><td>React 18 + FullCalendar + SweetAlert2</td><td>Interfaz interactiva del calendario y diálogos modales</td></tr>
-              <tr><td>API</td><td>Node.js · Express</td><td>Endpoints REST para login, eventos y registro de acciones</td></tr>
-              <tr><td>Base de datos</td><td>MongoDB + Mongoose</td><td>Persiste usuarios, eventos y colección de historial</td></tr>
-              <tr><td>Sesión</td><td>JWT + localStorage</td><td>Autenticación simple en el navegador</td></tr>
-            </tbody>
-          </table>
+    <div style={styles.container}>
+      {/* Panel informativo */}
+      <div style={styles.left}>
+        <h2 style={styles.heading}>📅 Calendario colaborativo con historial de acciones</h2>
+        <p>
+          Aplicación web completa para gestionar eventos de forma colaborativa, con historial en vivo
+          de acciones realizadas por los usuarios. Desarrollada con el stack <strong>MERN</strong> y FullCalendar.
+        </p>
 
-          <h4 className="mt-4 text-primary">🔄 Flujo de usuario</h4>
-          <ul>
-            <li><strong>Login:</strong> POST /api/logincalendario → guarda <code>token</code> y <code>user</code> en localStorage → navega a <code>/homecalendario</code>.</li>
-            <li><strong>Inicio:</strong> GET /api/calendario y /api/historial para mostrar calendario y historial.</li>
-            <li><strong>Crear evento:</strong> SweetAlert2 recoge datos → POST /api/calendario → actualiza vista e historial.</li>
-            <li><strong>Editar/mover/eliminar:</strong> PUT o DELETE según la acción → se refresca y registra en /api/historial.</li>
-            <li><strong>Historial en vivo:</strong> Se muestra debajo del calendario, scrollable y actualizado en cada acción.</li>
-          </ul>
-        </div>
+        <h3 style={styles.subheading}>🚀 Funcionalidades principales</h3>
+        <ul>
+          <li>Calendario interactivo para crear, editar y eliminar eventos.</li>
+          <li>Historial de acciones en vivo, mostrando quién hizo qué y cuándo.</li>
+          <li>Autenticación segura con JWT y localStorage.</li>
+          <li>API RESTful para login, eventos y registro de historial.</li>
+          <li>Feedback visual con SweetAlert2 y diseño responsive.</li>
+        </ul>
 
-        {/* 🔐 Lado Derecho: Login */}
-        <div className="col-md-6 d-flex flex-column justify-content-center align-items-center gap-4">
-          <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow" style={{ width: '100%', maxWidth: '340px' }}>
-            <h2 className="mb-3">Login Calendario 📅</h2>
-            <input
-              type="email"
-              className="form-control mb-3"
-              placeholder="Correo"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              className="form-control mb-3"
-              placeholder="Contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button type="submit" className="btn btn-primary w-100">Entrar</button>
-            {error && <p className="text-danger mt-3">{error}</p>}
-          </form>
+        <h3 style={styles.subheading}>🛠️ Tecnologías utilizadas</h3>
+        <ul>
+          <li>Frontend: React 18, FullCalendar, SweetAlert2.</li>
+          <li>Backend: Node.js y Express.</li>
+          <li>Base de datos: MongoDB + Mongoose.</li>
+          <li>Autenticación: JWT + localStorage.</li>
+        </ul>
 
-          {/* Usuarios de prueba */}
-          <div className="bg-white p-3 rounded shadow-sm text-center" style={{ maxWidth: '340px', fontSize: '0.9rem' }}>
-            <h6 className="text-secondary mb-2">🧪 Usuarios de prueba</h6>
-            <div><strong>prueba1@gmail.com</strong> · <em>123456</em></div>
-            <div><strong>prueba2@gmail.com</strong> · <em>123456</em></div>
-          </div>
-        </div>
+        <h3 style={styles.subheading}>🎯 ¿Qué aprendí con este proyecto?</h3>
+        <ul>
+          <li>Integrar bibliotecas de terceros como FullCalendar y SweetAlert2 en React.</li>
+          <li>Diseñar un historial en vivo y mostrarlo de forma scrollable y actualizada.</li>
+          <li>Implementar JWT y localStorage para sesiones seguras y persistentes.</li>
+          <li>Manejar operaciones CRUD de manera eficiente con Express y MongoDB.</li>
+          <li>Crear una experiencia de usuario fluida y moderna.</li>
+        </ul>
+
+        <h3 style={styles.subheading}>🔑 Usuarios de prueba</h3>
+        <ul>
+          <li><code>prueba1@gmail.com / 123456</code></li>
+          <li><code>prueba2@gmail.com / 123456</code></li>
+        </ul>
+
+        <p style={styles.summary}>
+          Este proyecto demuestra mis habilidades fullstack y mi enfoque en la experiencia de usuario.
+        </p>
+      </div>
+
+      {/* Formulario de inicio de sesión */}
+      <div style={styles.right}>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <h2 style={styles.title}>🔐 Iniciar sesión</h2>
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={styles.input}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={styles.input}
+          />
+          <button type="submit" style={styles.button}>Entrar</button>
+          {error && <p style={styles.error}>{error}</p>}
+        </form>
       </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    minHeight: '100vh',
+    fontFamily: 'Segoe UI, sans-serif',
+    backgroundColor: '#f7f7f7',
+    flexWrap: 'wrap',
+  },
+  left: {
+    flex: 1,
+    padding: '2rem',
+    backgroundColor: '#ffffff',
+    borderRight: '1px solid #ddd',
+    fontSize: '0.95rem',
+    lineHeight: '1.6',
+    minWidth: '300px',
+  },
+  right: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: '300px',
+    padding: '2rem',
+  },
+  form: {
+    backgroundColor: '#ffffff',
+    padding: '2.5rem',
+    borderRadius: '12px',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    maxWidth: '480px',
+  },
+  title: {
+    marginBottom: '1.5rem',
+    textAlign: 'center',
+    color: '#333',
+    fontSize: '2rem',
+  },
+  input: {
+    padding: '0.9rem',
+    marginBottom: '1rem',
+    border: '1px solid #ccc',
+    borderRadius: '6px',
+    fontSize: '1.1rem',
+    outline: 'none',
+  },
+  button: {
+    padding: '0.9rem',
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '6px',
+    fontWeight: 'bold',
+    fontSize: '1.2rem',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+  },
+  error: {
+    marginTop: '1rem',
+    color: '#dc3545',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  heading: {
+    color: '#333',
+    marginBottom: '1rem',
+  },
+  subheading: {
+    marginTop: '1.2rem',
+    color: '#333',
+  },
+  summary: {
+    marginTop: '1rem',
+    fontStyle: 'italic',
+    color: '#555',
+  },
 };
 
 export default LoginCalendario;
