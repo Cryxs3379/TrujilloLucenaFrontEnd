@@ -1,50 +1,73 @@
 // src/apps/calendario/api/apiCalendario.js
 import axios from 'axios';
 
-// URLS Base
- //const API_LOGIN = 'http://localhost:10000/api/logincalendario';
- //const API_EVENTOS = 'http://localhost:10000/api/calendario'; // 👈 NUEVA para eventos
-//const API_HISTORIAL = 'http://localhost:10000/api/historial'; // ✅ AÑADIR ESTA LÍNEA
-const API_LOGIN = 'https://trujillolucenabackend.onrender.com/api/logincalendario';
-const API_EVENTOS = 'https://trujillolucenabackend.onrender.com/api/calendario';
-const API_HISTORIAL = 'https://trujillolucenabackend.onrender.com/api/historial';
+// Usa env si existe, si no Render
+const BASE_URL =
+  import.meta.env?.VITE_API_URL?.replace(/\/$/, '') ||
+  'https://trujillolucenabackend.onrender.com';
+
+const api = axios.create({
+  baseURL: `${BASE_URL}/api`,
+  timeout: 15000,
+});
+
+// Interceptor: añade JWT si existe
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('tokenCalendario');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// Interceptor de respuesta: si 401 => limpia y redirige a login
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err?.response?.status === 401) {
+      localStorage.removeItem('tokenCalendario');
+      localStorage.removeItem('userCalendario');
+      // Evita bucle si ya estás en login
+      if (!location.pathname.includes('/logincalendario')) {
+        window.location.href = '/logincalendario';
+      }
+    }
+    return Promise.reject(err);
+  }
+);
 
 // 🔐 Login para Calendario
 export const loginCalendario = async (email, password) => {
-  const res = await axios.post(API_LOGIN, { email, password });
-  return res.data;
+  const { data } = await api.post('/logincalendario', { email, password });
+  return data; // { token, user }
 };
 
-// 📅 Obtener todos los eventos
+// 📅 Eventos
 export const getEventos = async () => {
-  const res = await axios.get(API_EVENTOS);
-  return res.data;
+  const { data } = await api.get('/calendario');
+  return data;
 };
 
-// 📅 Crear un evento nuevo
 export const crearEvento = async (evento) => {
-  const res = await axios.post(API_EVENTOS, evento);
-  return res.data;
+  const { data } = await api.post('/calendario', evento);
+  return data;
 };
 
-// 📅 Actualizar un evento existente
 export const actualizarEvento = async (id, eventoActualizado) => {
-  const res = await axios.put(`${API_EVENTOS}/${id}`, eventoActualizado);
-  return res.data;
+  const { data } = await api.put(`/calendario/${id}`, eventoActualizado);
+  return data;
 };
 
-// 📅 Eliminar un evento
 export const eliminarEvento = async (id) => {
-  const res = await axios.delete(`${API_EVENTOS}/${id}`);
-  return res.data;
+  const { data } = await api.delete(`/calendario/${id}`);
+  return data;
 };
-// 🆕 historial
+
+// 🕑 Historial
 export const getHistorial = async () => {
-  const res = await axios.get(API_HISTORIAL); // 🛑 Aquí falla porque no existe aún API_HISTORIAL
-  return res.data;
+  const { data } = await api.get('/historial');
+  return data;
 };
 
 export const crearHistorial = async (accion) => {
-  const res = await axios.post(API_HISTORIAL, accion);
-  return res.data;
+  const { data } = await api.post('/historial', accion);
+  return data;
 };
