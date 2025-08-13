@@ -166,9 +166,7 @@ const HomeCalendario = () => {
         showCancelButton: true,
         confirmButtonText: 'Crear',
         cancelButtonText: 'Cancelar',
-        customClass: {
-          popup: 'swal-compact',
-        },
+        customClass: { popup: 'swal-compact' },
       });
 
       if (isConfirmed && value) {
@@ -187,9 +185,7 @@ const HomeCalendario = () => {
 
   const handleEventClick = useCallback(
     async (info) => {
-      if (!canEdit) {
-        return verDetalle(info);
-      }
+      if (!canEdit) return verDetalle(info);
 
       const res = await MySwal.fire({
         title: `Opciones para "${info.event.title}"`,
@@ -199,9 +195,7 @@ const HomeCalendario = () => {
         denyButtonText: '👁️ Ver detalle',
         cancelButtonText: '🗑️ Eliminar',
         reverseButtons: true,
-        customClass: {
-          popup: 'swal-compact',
-        },
+        customClass: { popup: 'swal-compact' },
       });
 
       if (res.isConfirmed) {
@@ -209,7 +203,6 @@ const HomeCalendario = () => {
       } else if (res.isDenied) {
         verDetalle(info);
       } else if (res.dismiss === Swal.DismissReason.cancel) {
-        // Solo eliminar cuando el usuario pulsa el botón "Cancelar/Eliminar"
         eliminarEventoClick(info);
       }
     },
@@ -225,9 +218,7 @@ const HomeCalendario = () => {
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar',
-        customClass: {
-          popup: 'swal-compact',
-        },
+        customClass: { popup: 'swal-compact' },
       });
 
       if (result.isConfirmed) {
@@ -280,9 +271,7 @@ const HomeCalendario = () => {
         showCancelButton: true,
         confirmButtonText: 'Guardar',
         cancelButtonText: 'Cancelar',
-        customClass: {
-          popup: 'swal-compact',
-        },
+        customClass: { popup: 'swal-compact' },
       });
 
       if (isConfirmed && value) {
@@ -312,9 +301,7 @@ const HomeCalendario = () => {
       `,
       padding: '1.25em',
       background: '#fff',
-      customClass: {
-        popup: 'swal-compact',
-      },
+      customClass: { popup: 'swal-compact' },
     });
   };
 
@@ -360,17 +347,12 @@ const HomeCalendario = () => {
     [cargarEventos, registrarHistorial]
   );
 
-  // ---------- configuración responsive de FullCalendar ----------
-  const headerToolbar = isCompact
-    ? { left: 'prev,next today', center: 'title', right: 'timeGridDay,timeGridWeek,dayGridMonth' }
-    : { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay' };
+  // ---------- configuración consistente + micro-ajustes móvil ----------
+  const headerToolbar = { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay' };
+  const buttonText   = { today: 'Hoy', month: 'Mes', week: 'Semana', day: 'Día' };
 
-  const buttonText = isCompact
-    ? { today: 'Hoy', month: 'Mes', week: 'Sem', day: 'Día' }
-    : { today: 'Hoy', month: 'Mes', week: 'Semana', day: 'Día' };
-
-  const dayMaxEventRows = isCompact ? 2 : 4;
-  const aspectRatio = isCompact ? 0.88 : md ? 1.05 : 1.35; // alto relativo a ancho
+  const dayMaxEventRows = isCompact ? 3 : 4;
+  const aspectRatio     = isCompact ? 1.08 : md ? 1.15 : 1.25; // más alto en móvil para evitar scroll
 
   return (
     <div className="container py-3 py-md-4">
@@ -410,7 +392,7 @@ const HomeCalendario = () => {
           <div className="fc-responsive-wrapper">
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              initialView={isCompact ? 'timeGridDay' : 'dayGridMonth'}
+              initialView="dayGridMonth"
               headerToolbar={headerToolbar}
               buttonText={buttonText}
               locales={[esLocale]}
@@ -435,8 +417,6 @@ const HomeCalendario = () => {
               eventClick={handleEventClick}
               eventDrop={canEdit ? handleEventDrop : undefined}
               eventResize={canEdit ? handleEventResize : undefined}
-              slotMinTime="06:00:00"
-              slotMaxTime="22:00:00"
               slotEventOverlap={false}
               dayHeaderFormat={{ weekday: isCompact ? 'short' : 'long' }}
               moreLinkClick="popover"
@@ -481,16 +461,17 @@ const HomeCalendario = () => {
       {/* estilos finos para asegurar encaje pixel-perfect en móviles */}
       <style>{`
         .fc-responsive-wrapper { max-width: 100%; overflow-x: hidden; }
-        /* Ajustes de botones del header en pantallas pequeñas */
-        .fc .fc-toolbar.fc-header-toolbar { gap: 0.25rem; flex-wrap: wrap; }
+        /* Ajustes de toolbar: que envuelva con gracia en pantallas estrechas */
+        .fc .fc-toolbar.fc-header-toolbar { gap: .25rem; flex-wrap: wrap; align-items: center; }
+        .fc .fc-toolbar-chunk { display: flex; gap: .25rem; flex-wrap: wrap; }
         .fc .fc-toolbar-title { font-size: 1rem; }
         @media (min-width: 576px) { .fc .fc-toolbar-title { font-size: 1.125rem; } }
         @media (min-width: 768px) { .fc .fc-toolbar-title { font-size: 1.25rem; } }
 
-        /* Botones más compactos en móvil */
+        /* Botones compactos en móvil sin cambiar la disposición */
         @media (max-width: 575.98px) {
-          .fc .fc-button { padding: .3rem .45rem; font-size: .8rem; }
-          .fc .fc-button-group { display: flex; }
+          .fc .fc-button { padding: .32rem .5rem; font-size: .84rem; line-height: 1; }
+          .fc .fc-button-group { display: flex; flex-wrap: nowrap; }
           .historial-scroll { max-height: 35vh !important; }
         }
 
@@ -498,11 +479,10 @@ const HomeCalendario = () => {
         .swal2-popup.swal-compact { width: min(92vw, 480px) !important; padding: 1rem !important; }
         .swal2-popup.swal-compact .swal2-input, .swal2-popup.swal-compact .swal2-textarea { font-size: 0.95rem; }
 
-        /* Asegura que FullCalendar no introduzca scroll horizontal */
+        /* Evitar scroll horizontal en el calendario */
         .fc .fc-scroller-liquid-absolute, .fc .fc-scroller { overscroll-behavior: contain; }
         .fc { --fc-border-color: rgba(0,0,0,.06); }
         .fc .fc-daygrid-event { border-radius: .375rem; padding: .1rem .25rem; }
-        .fc .fc-timegrid-slot { height: 2.25rem; }
       `}</style>
     </div>
   );
